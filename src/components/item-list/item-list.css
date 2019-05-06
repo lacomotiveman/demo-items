@@ -1,0 +1,7 @@
+.item-list .list-group {
+  padding: .25rem .75rem;
+}
+
+.list-group:first-child{
+  margin-top: 1rem;
+}
