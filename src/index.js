@@ -2,51 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app';
 
-import {createStore, bindActionCreators} from 'redux';
-import {connect, Provider}    from 'react-redux';
+import { createStore, bindActionCreators } from 'redux';
+import {connect, Provider}  from 'react-redux';
 
-const stateInitial = {param1:'1', param2:'22'};
+import { reducerRoot } from './store/reducers';
+import { actionChangeParam1, actionChangeParam2} from './store/actions';
+
 
 // IDs for TYPES of actions
 
-const ID_ACTION_CHANGE_PARAM1 = 'ID_ACTION_CHANGE_PARAM1';
-const ID_ACTION_CHANGE_PARAM2 = 'ID_ACTION_CHANGE_PARAM2';
-
-// ACTIONS
-
-const actionChangeParam1 = (newValue) =>{
-	return {
-		type: ID_ACTION_CHANGE_PARAM1,
-		payload: newValue
-	};
-}
-
-const actionChangeParam2 = (newValue) =>{
-	return {
-		type: ID_ACTION_CHANGE_PARAM2,
-		payload: newValue
-	};
-}
+export const ID_ACTION_CHANGE_PARAM1 = 'ID_ACTION_CHANGE_PARAM1';
+export const ID_ACTION_CHANGE_PARAM2 = 'ID_ACTION_CHANGE_PARAM2';
 
 
-// REDUCER
 
-const reducerRoot = (state = stateInitial, action) =>{
-	switch (action.type){
-		case ID_ACTION_CHANGE_PARAM1:
-			return {
-				...state,
-				param1: action.payload
-			};
-
-		case ID_ACTION_CHANGE_PARAM2:
-			return {
-				...state,
-				param2: action.payload
-			};
-		default: return {...state};
-	};
-};
 
 // STORE
 
