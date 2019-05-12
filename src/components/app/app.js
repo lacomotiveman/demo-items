@@ -114,6 +114,9 @@ export default class App extends Component{
 
 	render(){
 
+		// REDUX STORE
+		const { param1, param2, actionChangeParam1, actionChangeParam2 } = this.props;
+
 		const { items, searchString } = this.state;
 		const  doneCounter = items.filter((item)=>item.done).length;
 		const  leftCounter = items.length - doneCounter;
@@ -143,7 +146,14 @@ export default class App extends Component{
 					onImportant={(id)=>this.importantItem(id)}
 				/>
 				<ItemAdd onItemAdd={this.addItem}/>
-				
+				<div className="jumbotron">				
+					<p>REDUX in App Component:</p>
+					<p>state param1: { param1 }</p>
+					<p>state param2: { param2 }</p>
+					<button className="btn btn-info" onClick={()=>actionChangeParam1('new1')}>Change PARAM1 to NEW1</button> <span>    </span>
+					<button className="btn btn-info float-right" onClick={()=>actionChangeParam2('new22')}>Change PARAM2 to NEW22</button>
+					<p></p>
+				</div>
 				<ItemHeader h1="WebGL" h2="Try to Drag Slider or Orbit 3D-View"/>
 				<ThreeScene/>
 			</div>
