@@ -3,11 +3,8 @@ import ThreeSlider from '../three-slider';
 import * as THREE from 'three'
 import GLTFLoader from 'three-gltf-loader';;
 
-// npm i three-orbit-controls
 const OrbitControls = require('three-orbit-controls')(THREE);
-//import { GLTFLoader } from 'three/examples/jsm/controls/GLTFLoader.js';
-//const GLTFLoader = require('three-gltf-loader')(THREE);
-//import GLTFLoader from 'three-gltf-loader';
+
 
 export default class ThreeScene extends Component {
 
@@ -15,6 +12,15 @@ export default class ThreeScene extends Component {
         rotation: 0,
         model:1
     };
+
+    vertexShader () {
+        return 
+    }
+
+    fragmentShader () {
+        return 
+    }
+
 
     componentDidMount() {
         const width = this.mount.clientWidth;
@@ -40,8 +46,40 @@ export default class ThreeScene extends Component {
         this.addLights();
 
         const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-        const material = new THREE.MeshStandardMaterial( { color: 0xfeb74c } )
-        //const material = new THREE.MeshBasicMaterial( { color: 0x006f00 } );
+   
+        // shader-based material 
+
+        const material =  new THREE.ShaderMaterial({
+   
+            uniforms: {
+                colorB: {type: 'vec3', value: new THREE.Color(0xFF00FF)},
+                colorA: {type: 'vec3', value: new THREE.Color(0x000FFF)}
+             },
+
+            vertexShader: `
+                varying vec3 vUv; 
+                varying vec4 modelViewPosition; 
+                varying vec3 vecNormal;
+            
+                void main() {
+                    vUv = position; 
+                    vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+                    vecNormal = (modelViewMatrix * vec4(normal, 0.0)).xyz; 
+                    gl_Position = projectionMatrix * modelViewPosition; 
+                }
+            `,
+
+            fragmentShader: `
+                uniform vec3 colorA; 
+                uniform vec3 colorB; 
+                varying vec3 vUv;
+        
+                void main() {
+                    gl_FragColor = vec4(mix(colorA, colorB, vUv.z), 1.0);
+                }
+            `,
+          })
+
         this.cube = new THREE.Mesh( geometry, material );
         this.cube.castShadow = true;
         this.cube.receiveShadow = false;
@@ -83,9 +121,11 @@ export default class ThreeScene extends Component {
             this.grasshopper.castShadow = true;
             this.grasshopper.receiveShadow = false;
             this.scene.add(this.grasshopper);
+            // fix - момент загрузки наступат позже запуска animate 
+            this.animate(); // поэтому он перенесён сюда
         });
 
-        this.animate();
+        
     }
 
     componentDidUpdate(prevProps){
@@ -124,8 +164,6 @@ export default class ThreeScene extends Component {
         this.camera.position.z = 2;
         this.camera.lookAt(0,0.5,0);
 
-        //this.camera.position.set(3,3,3);
-        //this.camera.rotation.set(Math.PI/4,0,0);
     }
 
    animate = () => {
@@ -133,7 +171,8 @@ export default class ThreeScene extends Component {
         this.renderer.render(this.scene, this.camera);
         this.cube.rotation.y+=this.state.rotation;
         this.SpotLight.position.z=this.state.rotation*10;
-//        this.grasshopper.rotation.y+=this.state.rotation;
+        // fix - загружаемая модель тоже анимируется
+        this.grasshopper.rotation.y+=this.state.rotation;
 
     }
 
