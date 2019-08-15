@@ -197,13 +197,7 @@ export default class ThreeScene extends Component {
 
         return (
             <div>
-                <div
-                    id="boardCanvas"
-                    style={{ width: "100%", height: "300px" }}
-                    ref={mount => {
-                    this.mount = mount;
-                    }}
-                />
+
                 <ThreeSlider
                     onChangeSlider={ this.onChangeSlider }
                     compName="ThreeSlider" 
@@ -217,6 +211,13 @@ export default class ThreeScene extends Component {
                     min="1" 
                     max="2" 
                     step="1"
+                />
+                <div
+                    id="boardCanvas"
+                    style={{ width: "100%", height: "300px" }}
+                    ref={mount => {
+                    this.mount = mount;
+                    }}
                 />
             </div>
         );

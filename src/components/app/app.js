@@ -156,8 +156,17 @@ export default class App extends Component{
 					onImportant={(id)=>this.importantItem(id)}
 				/>
 				<ItemAdd onItemAdd={this.addItem}/>
-				
+
 				<p></p>
+			
+				<ItemHeader 
+					h1="WebGL" 
+					h2="Try to Drag Slider or Orbit 3D-View"
+				/>
+				<ThreeScene/>
+
+				<p></p>
+
 				<div className="jumbotron">
 					<ItemHeader 
 						h1="REDUX in App Component" 
@@ -169,11 +178,6 @@ export default class App extends Component{
 					<button className="btn btn-info float-right" onClick={()=>actionChangeParam2('new22')}>Change PARAM2 to NEW22</button>
 				</div>
 				
-				<ItemHeader 
-					h1="WebGL" 
-					h2="Try to Drag Slider or Orbit 3D-View"
-				/>
-				<ThreeScene/>
 			</div>
 		);
 	}
