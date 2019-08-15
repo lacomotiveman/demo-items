@@ -140,7 +140,13 @@ export default class App extends Component{
 
 		return(
 			<div className="demo-app">
-				<ItemHeader h1="Items React App" h2="Demo" left={leftCounter} done={doneCounter} total={items.length}/>
+				<ItemHeader 
+					h1="Items React App" 
+					h2="Demo" 
+					left={leftCounter} 
+					done={doneCounter} 
+					total={items.length}
+				/>
 				<ItemSearch onSearchChange={this.onSearchChange}/>
 				<ItemFilter onFilter={this.onFilter}/>
 				<ItemList
@@ -150,15 +156,23 @@ export default class App extends Component{
 					onImportant={(id)=>this.importantItem(id)}
 				/>
 				<ItemAdd onItemAdd={this.addItem}/>
-				<div className="jumbotron">				
-					<p>REDUX in App Component:</p>
+				
+				<p></p>
+				<div className="jumbotron">
+					<ItemHeader 
+						h1="REDUX in App Component" 
+						h2="Try to Press Change Param button"
+					/>				
 					<p>state param1: { param1 }</p>
 					<p>state param2: { param2 }</p>
 					<button className="btn btn-info" onClick={()=>actionChangeParam1('new1')}>Change PARAM1 to NEW1</button> <span>    </span>
 					<button className="btn btn-info float-right" onClick={()=>actionChangeParam2('new22')}>Change PARAM2 to NEW22</button>
-					<p></p>
 				</div>
-				<ItemHeader h1="WebGL" h2="Try to Drag Slider or Orbit 3D-View"/>
+				
+				<ItemHeader 
+					h1="WebGL" 
+					h2="Try to Drag Slider or Orbit 3D-View"
+				/>
 				<ThreeScene/>
 			</div>
 		);
